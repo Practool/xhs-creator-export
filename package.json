@@ -1,0 +1,66 @@
+{
+  "name": "xhs-creator-export",
+  "version": "0.2.0",
+  "description": "Export analytics from your own Xiaohongshu creator account to Excel, CSV and JSON.",
+  "license": "MIT",
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "type": "module",
+  "bin": {
+    "xhs-creator-export": "dist/cli.js"
+  },
+  "files": [
+    "dist/adapter.js",
+    "dist/browser.js",
+    "dist/cli.js",
+    "dist/config.js",
+    "dist/download.js",
+    "dist/errors.js",
+    "dist/exporter.js",
+    "dist/files.js",
+    "dist/naming.js",
+    "dist/parser.js",
+    "dist/runner.js",
+    "dist/store.js",
+    "dist/types.js",
+    "config.example.yaml",
+    "README.md",
+    "LICENSE",
+    "docs/getting-started.md",
+    "docs/cli-reference.md",
+    "docs/configuration.md",
+    "docs/output-files.md",
+    "docs/troubleshooting.md",
+    "docs/privacy.md",
+    "docs/dependencies.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "check": "tsc -p tsconfig.json --noEmit",
+    "start": "node dist/cli.js",
+    "prepack": "npm run build",
+    "release": "npm run build && node scripts/package-release.mjs"
+  },
+  "dependencies": {
+    "archiver": "^7.0.1",
+    "better-sqlite3": "^12.4.1",
+    "commander": "^14.0.1",
+    "exceljs": "^4.4.0",
+    "playwright": "^1.56.0",
+    "sharp": "^0.35.5",
+    "yaml": "^2.8.1",
+    "zod": "^4.1.12"
+  },
+  "overrides": {
+    "exceljs": {
+      "uuid": "^11.1.1"
+    }
+  },
+  "devDependencies": {
+    "@types/archiver": "^6.0.3",
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/node": "^24.10.0",
+    "typescript": "^5.9.3"
+  }
+}

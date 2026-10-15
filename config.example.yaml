@@ -1,0 +1,13 @@
+# Copy to xhs-creator-export.yaml or run: xhs-creator-export init
+browser: auto # auto | chrome | chromium
+profileDir: .xhs-creator-export/profile
+outputDir: .xhs-creator-export/jobs
+databasePath: .xhs-creator-export/tasks.sqlite
+headless: false
+dateStrategy: platform # discover the range offered by the platform
+intervalMs: 2000
+operationTimeoutMs: 30000
+downloadTimeoutMs: 60000
+stepRetries: 2
+noteRestarts: 1
+# Relative paths are resolved against this YAML file, not the shell cwd.

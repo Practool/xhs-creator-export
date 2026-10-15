@@ -1,0 +1,23 @@
+.DS_Store
+Thumbs.db
+node_modules/
+dist/
+release/
+.xhs-creator-export/
+xhs-creator-export.yaml
+*-config.yaml
+.env
+.env.*
+downloads/
+data/
+outputs/
+*.sqlite*
+*.log
+*.tgz
+*.zip
+*.xlsx
+coverage/
+
+# Protect pre-rename local configuration and runtime data as well.
+.xhs-downloader/
+/xhs-downloader.yaml
