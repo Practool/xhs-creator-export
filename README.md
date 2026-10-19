@@ -64,7 +64,7 @@ node dist/cli.js collect
 | `official/` | 平台官方导出文件 |
 | `core-view-trends/`、`trends/` | 适用的观看趋势截图 |
 | `validation.json` | 完整性、缺失项和警告报告 |
-| `archive.zip` | 本批次打包归档 |
+| `<任务目录名>.zip` | 与任务目录同名的本批次打包归档，文件名包含任务日期 |
 
 平台不适用、数据不足与采集失败分别记录；**缺失值不自动写成 0**。
 
@@ -78,6 +78,16 @@ node dist/cli.js export YOUR_JOB_ID
 ```
 
 将 `YOUR_JOB_ID` 替换为实际任务 ID。默认显示采集浏览器；需要后台运行时见[无界面配置](docs/configuration.md)。当前不会在无界面模式遇到验证时自动打开窗口。
+
+## 跨批次历史（本地 v0.3 开发版，尚未发布）
+
+新增离线手动历史同步、修订审计与 CSV / Excel / JSON 导出，原采集命令继续使用。首次同步需明确账号别名，详见[历史数据说明](docs/history-data.md)及[指标映射](docs/metric-mapping.md)。
+
+```sh
+node dist/cli.js history sync --account my-creator-account
+node dist/cli.js history verify
+node dist/cli.js history export --account my-creator-account
+```
 
 ## 文档
 

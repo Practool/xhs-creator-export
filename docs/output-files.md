@@ -8,7 +8,7 @@
 
 ```text
 <任务ID>/
-  archive.zip
+  <任务目录名>.zip
   小红书笔记分析总表.xlsx
   笔记分析总表.csv
   content-data.json
@@ -34,7 +34,7 @@
 | `official/` | 平台导出按钮生成的列表及逐篇核心数据文件 |
 | `core-view-trends/` | 核心观看数按小时、按天各一张完整截图 |
 | `trends/` | 视频适用的观看趋势模块截图 |
-| `archive.zip` | 汇总文件、报告与已索引产物的备份包，不含登录 profile 或任务 SQLite |
+| `<任务目录名>.zip` | 汇总文件、报告与已索引产物的备份包；名称与任务目录一致并包含任务日期，不含登录 profile 或任务 SQLite |
 
 任务 SQLite 位于 `.xhs-creator-export/tasks.sqlite`，用于续采。仅备份 ZIP 不足以保留可续采状态；升级和迁移时备份整个状态目录及配置。
 
@@ -68,3 +68,17 @@
 真实数据及截图可能包含身份关联信息，请按[隐私说明](privacy.md)保管，不要直接公开提交。
 
 [返回 README](../README.md)
+
+## 跨批次历史产物（v0.3）
+
+手动 `history sync` 创建与配置 `databasePath` 同目录的 `history.sqlite`；原 tasks.sqlite 与 Job 原件保持不变。`history export` 默认写入同级 `history-exports/history-<UTC时间>-<随机ID>/`。
+
+| 文件 | 用途 |
+| --- | --- |
+| `history-metrics-long.csv` | 每快照每指标一行，含单位、状态、统计窗口和来源 |
+| `history-notes-wide.csv` | 每 Job / 笔记当前有效版本一行，便于筛选主要指标 |
+| `history.xlsx` | Snapshots、Metrics、Data Dictionary 三个工作表 |
+| `history.json` | 含格式版本、QC 和 snapshots，保留 raw time、未映射字段及修订来源 |
+| `history-validation.json` | 账号、数量、时间缺失、被拒修订及最近同步 QC |
+
+历史 CSV 百分数为百分数点（26.9 表示 26.9%）；Excel 百分比单元格保存 0.269 并设置格式。宽表空值不等于零，逐指标状态以长表为准。默认不生成历史 ZIP。详见[历史语义](history-data.md)。

@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { registerHistory } from './history/command.js';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { Command } from 'commander';
@@ -21,7 +22,7 @@ const program = new Command().name('xhs-creator-export').description('XHS Creato
 const log = (s: string) => console.log(new Date().toLocaleTimeString('zh-CN', { timeZone: 'Asia/Shanghai' }) + ' ' + s);
 const controller = new AbortController();
 let signals = 0;
-process.on('SIGINT', () => { if (++signals > 1) process.exit(130); log('安全停止中；再次 Ctrl+C 强制退出'); controller.abort(); });
+process.on('SIGINT', () => { if (++signals > 1) process.exit(130); if (program.args[0] === 'history') console.error('安全停止中；再次 Ctrl+C 强制退出'); else log('安全停止中；再次 Ctrl+C 强制退出'); controller.abort(); });
 process.on('SIGTERM', () => controller.abort());
 const config = () => loadConfig(program.opts().config);
 program.command('init').description('创建首次配置（不覆盖已有文件）').action(async () => {
@@ -83,4 +84,5 @@ program.command('export').argument('[jobId]').description('重新导出任务，
     try { unlock = await acquireLock(cfg.profileDir); const job = store.get(jobId); await store.reconcile(job); await store.renameArtifacts(job); log('已导出：' + await exportArchive(store.archive(job), store.root(job.id))); }
     finally { try { await unlock?.(); } finally { store.close(); } }
   });
+registerHistory(program, config, controller.signal);
 await program.parseAsync().catch(error => { console.error(message(error)); process.exitCode = error instanceof StoppedError ? 130 : 1; });

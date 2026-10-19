@@ -21,7 +21,7 @@ Linux 如缺浏览器系统依赖，改用 `npx playwright install --with-deps c
 
 ## 安装方式 A：源码（当前主要方式）
 
-目前尚未配置公开 GitHub 远端，也未发布 Releases。获得本项目源码包后解压；将来上传仓库后也可使用 GitHub 的 **Code → Download ZIP** 或克隆真实仓库。在解压后的项目目录打开终端，Windows 可以使用 PowerShell：
+源码可从 [GitHub 仓库](https://github.com/Practool/xhs-creator-export) 的 **Code → Download ZIP** 获取或克隆。本地 v0.3 开发版尚未发布，公开仓库的版本以实际提交为准。获得源码包后解压。在解压后的项目目录打开终端，Windows 可以使用 PowerShell：
 
 ```sh
 npm ci
@@ -34,7 +34,7 @@ node dist/cli.js doctor
 
 ## 安装方式 B：运行版 ZIP
 
-本地构建脚本可生成 `release/xhs-creator-export-0.2.0.zip`，这不是已经发布的 GitHub 下载链接。当前没有可公开下载的 Release；待维护者实际发布运行版后，可下载该版本的真实 ZIP。运行版包含 `dist/cli.js`、锁文件及说明书，不包含 Node.js、浏览器或已安装依赖。
+本地构建脚本可生成 `release/xhs-creator-export-0.3.0.zip`，这不是已经发布的 GitHub 下载链接。当前没有可公开下载的 Release；待维护者实际发布运行版后，可下载该版本的真实 ZIP。运行版包含 `dist/cli.js`、锁文件及说明书，不包含 Node.js、浏览器或已安装依赖。
 
 拿到运行版 ZIP 后解压，在解压目录执行，无需构建：
 
@@ -74,12 +74,12 @@ node dist/cli.js collect
 
 终端显示任务 ID 和完整结果路径，默认是 `.xhs-creator-export/jobs/<任务ID>/`。macOS 可按 `Command + Shift + .` 显示隐藏目录，也可以直接打开终端显示的路径。为方便查找，可在 `xhs-creator-export.yaml` 中将 `outputDir` 改为 `downloads`；已有任务续采时应保留原路径。
 
-先打开 Excel 总表或 `archive.zip`，同时查看 `validation.json` 的缺失和警告。[输出文件说明](output-files.md)解释各文件及数据口径。[命令参考](cli-reference.md)介绍停止、续采和重试。
+先打开 Excel 总表或与任务目录同名的 ZIP 压缩包，同时查看 `validation.json` 的缺失和警告。[输出文件说明](output-files.md)解释各文件及数据口径。[命令参考](cli-reference.md)介绍停止、续采和重试。
 
 ## 原生模块安装失败
 
 先确认 Node.js 为 24，并检查网络能否获取依赖与平台二进制。如果仍提示需要本机编译，按错误提示安装工具：macOS 的 Xcode Command Line Tools、Windows 的 Visual Studio C++ Build Tools，或 Linux 的 Python、make 和 C++ 编译器。编译工具并非所有用户的必装项。
 
-安装检查只在 macOS 本地实际执行；仓库虽配置三平台构建流程，尚不能据此宣称 Windows、Linux 已完成真实平台采集验收。
+安装检查只在 macOS 本地实际执行；Windows、Linux 尚未完成真实平台采集验收。
 
 其他问题见[故障排查](troubleshooting.md)。[返回 README](../README.md)

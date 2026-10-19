@@ -1,6 +1,6 @@
 {
   "name": "xhs-creator-export",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Export analytics from your own Xiaohongshu creator account to Excel, CSV and JSON.",
   "license": "MIT",
   "engines": {
@@ -33,14 +33,26 @@
     "docs/output-files.md",
     "docs/troubleshooting.md",
     "docs/privacy.md",
-    "docs/dependencies.md"
+    "docs/dependencies.md",
+    "dist/history/command.js",
+    "dist/history/discovery.js",
+    "dist/history/export.js",
+    "dist/history/mapping.js",
+    "dist/history/normalization.js",
+    "dist/history/repository.js",
+    "dist/history/safety.js",
+    "dist/history/sync.js",
+    "dist/history/types.js",
+    "docs/history-data.md",
+    "docs/metric-mapping.md"
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "check": "tsc -p tsconfig.json --noEmit",
     "start": "node dist/cli.js",
     "prepack": "npm run build",
-    "release": "npm run build && node scripts/package-release.mjs"
+    "release": "npm run build && node scripts/package-release.mjs",
+    "test": "npm run build && node --test tests/*.test.mjs"
   },
   "dependencies": {
     "archiver": "^7.0.1",

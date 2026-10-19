@@ -21,3 +21,7 @@ coverage/
 # Protect pre-rename local configuration and runtime data as well.
 .xhs-downloader/
 /xhs-downloader.yaml
+
+# Cross-job history is private runtime data, even with custom paths.
+history-exports/
+history-reports/

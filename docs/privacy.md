@@ -34,3 +34,7 @@ XHS Creator Export 是非官方独立开源工具，与小红书不存在官方�
 备份与升级步骤见[故障排查](troubleshooting.md)，输出范围见[数据口径](output-files.md)。
 
 [返回 README](../README.md)
+
+## v0.3 历史隐私
+
+`history.sqlite`、其 WAL/SHM、账号别名映射、`history-exports/` 与同步报告都属于私人数据。首次账号别名只写入独立历史库，不上传。不要将它们放入源码、测试 fixture 或发布包。自定义历史导出路径若位于 Git 未忽略或已跟踪目录会被拒绝；符号链接路径也被拒绝。同步仅白名单读取各 Job 的 content-data.json / validation.json，不读取登录 profile 或 Cookie。

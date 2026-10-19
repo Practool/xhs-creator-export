@@ -75,3 +75,21 @@
 **处理步骤**：先退出全部任务，备份 `xhs-creator-export.yaml`、整个 `.xhs-creator-export/` 和自定义 `outputDir`，再替换程序文件。使用自定义配置时，也需备份原配置，并继续使用同一配置。详见[配置说明](configuration.md)。
 
 [返回 README](../README.md)
+
+## 历史同步与导出
+
+| 诊断码 | 处理 |
+| --- | --- |
+| `ACCOUNT_AMBIGUOUS` | 首次同步提供 `--account` 本地别名；多账号导出选择账号或明确 `--all-accounts` |
+| `ACCOUNT_CONFLICT` | Job 内证据冲突或绑定变化；核对原件，不要通过新别名强行改绑 |
+| `NOTE_ID_MISSING` / `NOTE_ID_CONFLICT` | 恢复原始稳定笔记 ID，标题无法代替 |
+| `TIME_UNKNOWN` | 保留 NULL；仅可核对原始记录，不以导入时间补齐 |
+| `SOURCE_MISSING` / `INVALID_JSON` / `INVALID_SCHEMA` | 检查配置 outputDir；重新导出损坏 Job 后再同步 |
+| `SOURCE_CHANGED` | 等待采集/导出结束后重新同步 |
+| `DB_LOCKED` / `READ_ONLY` | 关闭其他写入进程并检查私有目录权限，原任务库不受影响 |
+| `DB_VERSION_NEWER` / `DB_SCHEMA_UNKNOWN` | 保留原库；使用兼容版本，不删除或自动重建 |
+| `PUBLIC_OUTPUT` / `UNSAFE_PATH` | 使用仓库外或已忽略的未跟踪目录；使用真实路径，避免符号链接（macOS `/tmp`、`/var` 也可能是系统链接） |
+| `OUTPUT_EXISTS` | 改用一个尚不存在的输出目录 |
+| `EXCEL_ROW_LIMIT` | 按账号分别导出；单表超过上限时明确失败，不截断数据 |
+
+每个 Job 独立处理，单个文件损坏不会阻断其他 Job。安全中断后可重跑相同命令；无效修订保留在审计视图，不替换上一次有效版本。统计窗口未知是透明的质量警告，不能据此直接计算日增长。

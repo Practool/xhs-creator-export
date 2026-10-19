@@ -98,7 +98,7 @@ export async function exportArchive(archive: Archive, root: string, legacy = fal
   notes.eachRow(row => row.eachCell(c => { c.alignment = { wrapText: true, vertical: 'top' }; }));
   await atomicWrite(path.join(root, '小红书笔记分析总表.xlsx'), Buffer.from(await workbook.xlsx.writeBuffer()));
   await atomicWrite(path.join(root, 'validation.json'), JSON.stringify(report, null, 2));
-  const zipFile = path.join(root, 'archive.zip');
+  const zipFile = path.join(root, `${path.basename(root)}.zip`);
   const tempZip = zipFile + '.tmp';
   try {
     await new Promise<void>((resolve, reject) => {
@@ -110,6 +110,7 @@ export async function exportArchive(archive: Archive, root: string, legacy = fal
       void zip.finalize().catch(reject);
     });
     await fs.rename(tempZip, zipFile);
+    if (!legacy) await fs.rm(path.join(root, 'archive.zip'), { force: true });
   } finally { await fs.rm(tempZip, { force: true }).catch(() => {}); }
   return zipFile;
 }

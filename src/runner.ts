@@ -9,7 +9,7 @@ import { verifyArtifact } from './files.js';
 import { Store } from './store.js';
 import type { Config, Job, Note, Snapshot } from './types.js';
 
-export const VERSION = '0.2.0';
+export const VERSION = '0.3.0';
 export function createJob(config: Config, dates?: [string, string]): Job {
   const now = new Date().toISOString();
   return { schemaVersion: 4, id: 'content-' + now.replace(/[:.]/g, '-') + '-' + randomUUID().slice(0, 8),

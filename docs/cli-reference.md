@@ -59,3 +59,19 @@ node dist/cli.js export --legacy /path/to/content-data.json --out /path/to/conve
 旧 JSON 同目录需包含其引用的官方文件和截图；`--out` 仅用于此旧数据转换。旧 JSON 不转为可续采任务，建议明确指定不同输出目录，避免覆盖原文件。不要与任务 ID 同时使用 `--legacy`。
 
 [返回 README](../README.md)
+
+## 历史命令（v0.3 本地开发版）
+
+沿用全局 `-c, --config` 参数；每个命令均可加 `--help`。历史功能不访问平台、不启动浏览器。
+
+| 命令 | 作用 |
+| --- | --- |
+| `node dist/cli.js history sync --account my-creator-account` | 首次绑定账号别名并扫描配置 outputDir；只读原 Job |
+| `node dist/cli.js history sync --job YOUR_JOB_ID` | 只同步某个已经绑定账号的 Job |
+| `node dist/cli.js history status` | 统计历史快照并显示最近同步结果；不创建缺失的库 |
+| `node dist/cli.js history verify` | 检查结构、外键、唯一约束和业务指纹；不自动修复 |
+| `node dist/cli.js history export --account my-creator-account` | 导出当前有效版本的五种历史产物 |
+
+`history export` 可加 `--all-accounts` 明确允许多账号（不能与 `--account` 同用）、`--include-revisions` 查看旧有效版本、`--include-invalid` 包含被拒绝版本的审计视图、`--output NEW_PRIVATE_DIRECTORY` 指定尚不存在的私人目录。默认不覆盖现有输出。
+
+历史命令退出码：0 成功；1 配置/数据库/输出失败；2 部分 Job 失败、记录隔离或 verify 异常；130 安全中断。无错误但指标窗口未知等警告保存在 QC 中，不改变原任务状态。详情见[历史数据](history-data.md)。

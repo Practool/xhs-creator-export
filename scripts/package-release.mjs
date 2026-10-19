@@ -10,12 +10,14 @@ const pkg = JSON.parse(await fsp.readFile(path.join(root, 'package.json'), 'utf8
 const name = `${pkg.name}-${pkg.version}`;
 if (!/^[a-z0-9][a-z0-9.-]*$/.test(name)) throw new Error('非法发布包名称');
 const modules = ['adapter', 'browser', 'cli', 'config', 'download', 'errors', 'exporter', 'files', 'naming', 'parser', 'runner', 'store', 'types'];
-const docs = ['getting-started', 'cli-reference', 'configuration', 'output-files', 'troubleshooting', 'privacy', 'dependencies'];
+const historyModules = ["command", "discovery", "export", "mapping", "normalization", "repository", "safety", "sync", "types"];
+const tests = ['helpers.mjs', 'history-core.test.mjs', 'history-sync.test.mjs', 'history-export.test.mjs', 'history-cli.test.mjs', 'legacy-regression.test.mjs'];
+const docs = ['history-data', 'metric-mapping', 'getting-started', 'cli-reference', 'configuration', 'output-files', 'troubleshooting', 'privacy', 'dependencies'];
 const common = ['package.json', 'package-lock.json', 'README.md', 'LICENSE', 'config.example.yaml', ...docs.map(n => `docs/${n}.md`)];
 // No globs or directory walks: generated leftovers and private local files stay out.
-const runtime = [...common, ...modules.map(n => `dist/${n}.js`)];
-const source = [...common, ...modules.map(n => `src/${n}.ts`), 'tsconfig.json', 'scripts/package-release.mjs',
-  '.gitignore', '.node-version', '.nvmrc', '.github/workflows/ci.yml', '.github/workflows/release.yml'];
+const runtime = [...common, ...modules.map(n => `dist/${n}.js`), ...historyModules.map(n => `dist/history/${n}.js`)];
+const source = [...common, ...modules.map(n => `src/${n}.ts`), ...historyModules.map(n => `src/history/${n}.ts`), ...tests.map(n => `tests/${n}`), 'tsconfig.json', 'scripts/package-release.mjs',
+  '.gitignore', '.node-version', '.nvmrc'];
 const npmFiles = new Set(pkg.files);
 const expectedNpmFiles = runtime.filter(n => !['package.json', 'package-lock.json'].includes(n));
 if (npmFiles.size !== expectedNpmFiles.length || expectedNpmFiles.some(n => !npmFiles.has(n))) {
